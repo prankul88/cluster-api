@@ -85,6 +85,9 @@ type Client interface {
 
 	// Template has methods to work with templates stored in the cluster.
 	Template() TemplateClient
+
+	// WorkloadCluster has methods to make
+	WorkloadCluster() WorkloadCluster
 }
 
 // PollImmediateWaiter tries a condition func until it returns true, an error, or the timeout is reached.
@@ -138,6 +141,10 @@ func (c *clusterClient) ProviderUpgrader() ProviderUpgrader {
 
 func (c *clusterClient) Template() TemplateClient {
 	return newTemplateClient(c.proxy, c.configClient)
+}
+
+func (c *clusterClient) WorkloadCluster() WorkloadCluster {
+	return newComponentClient(c.proxy)
 }
 
 // Option is a configuration option supplied to New
